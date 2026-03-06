@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="acceptance/Ocelot.Tracing.OpenTracing.Acceptance.csproj" />
   <Project Path="src/Ocelot.Tracing.OpenTracing.csproj" />
   <Project Path="unit/Ocelot.Tracing.OpenTracing.UnitTests.csproj" />
 </Solution>
