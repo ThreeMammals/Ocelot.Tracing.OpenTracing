@@ -33,7 +33,7 @@ public class OpenTracingTracer : IOcelotTracer
         Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> baseSendAsync,
         CancellationToken cancellationToken)
     {
-        using var scope = _tracer.BuildSpan(request.RequestUri.AbsoluteUri).StartActive(finishSpanOnDispose: true);
+        using var scope = _tracer.BuildSpan(request.RequestUri!.AbsoluteUri).StartActive(finishSpanOnDispose: true);
         var span = scope.Span;
         span.SetTag(Tags.SpanKind, Tags.SpanKindClient)
             .SetTag(Tags.HttpMethod, request.Method.Method)
