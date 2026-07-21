@@ -15,6 +15,8 @@ public class OpenTracingTracerTests : Unit
     private readonly Mock<ITracer> _tracer = new();
     public OpenTracingTracerTests() => sut = new(_tracer.Object);
 
+    public override CancellationToken CancelMe => TestContext.Current.CancellationToken;
+
     [Fact]
     public void Ctor_ArgNullCheck()
     {

@@ -4,7 +4,6 @@ using Ocelot.DependencyInjection;
 using Ocelot.Logging;
 using OpenTracing;
 using OpenTracing.Util;
-using Shouldly;
 
 namespace Ocelot.Tracing.OpenTracing.UnitTests;
 
@@ -22,15 +21,21 @@ public class OcelotBuilderExtensionsTests
         var actual = builder.AddOpenTracing();
 
         // Assert
-        Assert.Equal(builder, actual);
-        services.Single(x => x.ServiceType == typeof(IOcelotTracer))
-            .Lifetime.ShouldBe(ServiceLifetime.Singleton);
-        services.Single(x => x.ServiceType == typeof(ITracer))
-            .Lifetime.ShouldBe(ServiceLifetime.Singleton);
+        Assert.Same(builder, actual);
+
+        ServiceDescriptor sd = services.Single(x => x.ServiceType == typeof(IOcelotTracer));
+        Assert.Equal(ServiceLifetime.Singleton, sd.Lifetime);
+
+        sd = services.Single(x => x.ServiceType == typeof(ITracer));
+        Assert.Equal(ServiceLifetime.Singleton, sd.Lifetime);
+
         var provider = services.BuildServiceProvider(true);
-        var actualTracer = provider.GetService<IOcelotTracer>()
-            .ShouldNotBeNull().ShouldBeOfType<OpenTracingTracer>();
-        var nativeTracer = provider.GetService<ITracer>()
-            .ShouldNotBeNull().ShouldBeOfType<GlobalTracer>();
+        var actualTracer = provider.GetService<IOcelotTracer>();
+        Assert.NotNull(actualTracer);
+        Assert.IsType<OpenTracingTracer>(actualTracer);
+
+        var nativeTracer = provider.GetService<ITracer>();
+        Assert.NotNull(nativeTracer);
+        Assert.IsType<GlobalTracer>(nativeTracer);
     }
 }
