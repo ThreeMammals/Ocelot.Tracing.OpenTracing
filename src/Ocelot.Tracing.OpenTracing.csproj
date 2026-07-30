@@ -31,7 +31,7 @@
     <None Include="..\README.md" Pack="true" PackagePath="\" Link="package\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Ocelot" Version="25.0.0-beta.3" />
+    <PackageReference Include="Ocelot" Version="25.0.0" />
     <PackageReference Include="OpenTracing" Version="0.12.1" />
   </ItemGroup>
 </Project>
